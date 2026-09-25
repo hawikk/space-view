@@ -22,7 +22,7 @@ impl DiskTreeApp {
                     ui.add_space(26.0);
 
                     if let Some(err) = &self.start_error {
-                        egui::Frame::new().fill(Color32::from_rgb(70, 30, 30)).corner_radius(6.0).inner_margin(10.0).show(ui, |ui| {
+                        egui::Frame::new().fill(Color32::from_rgb(70, 30, 30)).corner_radius(0.0).inner_margin(10.0).show(ui, |ui| {
                             ui.set_width(ui.available_width());
                             ui.label(RichText::new(err).color(Color32::from_rgb(255, 200, 200)));
                         });

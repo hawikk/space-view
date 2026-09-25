@@ -34,7 +34,7 @@ pub(super) fn stat(ui: &mut Ui, label: &str, value: &str) {
 pub(super) fn warning_box(ui: &mut Ui, text: &str) {
     egui::Frame::new()
         .fill(Color32::from_rgb(80, 28, 28))
-        .corner_radius(6.0)
+        .corner_radius(0.0)
         .inner_margin(8.0)
         .show(ui, |ui| {
             ui.set_width(ui.available_width());
@@ -45,9 +45,9 @@ pub(super) fn warning_box(ui: &mut Ui, text: &str) {
 pub(super) fn drive_card(ui: &mut Ui, d: &Drive) -> bool {
     let (rect, resp) = ui.allocate_exact_size(Vec2::new(232.0, 96.0), Sense::click());
     let p = ui.painter();
-    p.rect_filled(rect, 8.0, if resp.hovered() { CARD_HOVER } else { CARD });
+    p.rect_filled(rect, 0.0, if resp.hovered() { CARD_HOVER } else { CARD });
     if resp.hovered() {
-        p.rect_stroke(rect, 8.0, Stroke::new(1.0, ACCENT), StrokeKind::Inside);
+        p.rect_stroke(rect, 0.0, Stroke::new(1.0, ACCENT), StrokeKind::Inside);
     }
     let root = d.root.display().to_string();
     let title = if d.label.is_empty() {
@@ -149,9 +149,14 @@ pub(super) fn list_row(
         ui.allocate_exact_size(Vec2::new(ui.available_width(), ROW_H), Sense::click());
     let p = ui.painter();
     if selected {
-        p.rect_filled(rect, 3.0, Color32::from_rgb(45, 70, 115));
+        p.rect_filled(rect, 0.0, Color32::from_rgb(48, 42, 28));
+        p.rect_filled(
+            Rect::from_min_size(rect.min, Vec2::new(2.0, rect.height())),
+            0.0,
+            SELECT,
+        );
     } else if resp.hovered() {
-        p.rect_filled(rect, 3.0, CARD);
+        p.rect_filled(rect, 0.0, CARD);
     }
     let size = n.size(metric);
     let frac = if parent_size > 0 {

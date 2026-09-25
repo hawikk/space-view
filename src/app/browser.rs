@@ -144,14 +144,16 @@ impl DiskTreeApp {
                 // Selection card
                 egui::Frame::new()
                     .fill(CARD)
-                    .corner_radius(6.0)
+                    .corner_radius(0.0)
                     .inner_margin(10.0)
                     .show(ui, |ui| {
                         // Fixed height: selecting must not shift the list under the
                         // cursor (the second click of a double-click would hit
-                        // another row).
+                        // another row). Do not wrap the action rows. A wrap grows
+                        // this card and moves the list.
                         ui.set_width(ui.available_width());
-                        ui.set_height(SELECTION_CARD_H);
+                        ui.set_min_height(SELECTION_CARD_H);
+                        ui.set_max_height(SELECTION_CARD_H);
                         match self.selected {
                             None => {
                                 ui.label(
@@ -177,6 +179,19 @@ impl DiskTreeApp {
                                     )
                                     .truncate(),
                                 );
+                                let size = n.size(metric);
+                                let size_text = format::bytes(size);
+                                let (num, unit) =
+                                    size_text.rsplit_once(' ').unwrap_or((&size_text, ""));
+                                ui.horizontal(|ui| {
+                                    ui.label(
+                                        RichText::new(num)
+                                            .size(28.0)
+                                            .strong()
+                                            .color(Color32::WHITE),
+                                    );
+                                    ui.label(RichText::new(unit).size(14.0).color(TEXT_DIM));
+                                });
                                 let path_text = path.display().to_string();
                                 ui.add(
                                     egui::Label::new(

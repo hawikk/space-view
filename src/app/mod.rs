@@ -35,7 +35,7 @@ const DANGER: Color32 = Color32::from_rgb(170, 48, 48);
 const WARN: Color32 = Color32::from_rgb(240, 180, 70);
 const SELECT: Color32 = Color32::from_rgb(255, 214, 90);
 const ROW_H: f32 = 22.0;
-const SELECTION_CARD_H: f32 = 128.0;
+const SELECTION_CARD_H: f32 = 200.0;
 
 enum Drives {
     Loading(Receiver<Vec<Drive>>),
@@ -901,6 +901,12 @@ fn setup_style(ctx: &egui::Context) {
     visuals.faint_bg_color = CARD;
     visuals.selection.bg_fill = Color32::from_rgb(45, 90, 160);
     visuals.hyperlink_color = ACCENT;
+    let square = egui::CornerRadius::ZERO;
+    visuals.widgets.noninteractive.corner_radius = square;
+    visuals.widgets.inactive.corner_radius = square;
+    visuals.widgets.hovered.corner_radius = square;
+    visuals.widgets.active.corner_radius = square;
+    visuals.widgets.open.corner_radius = square;
     // The palette is dark; don't follow a light OS theme.
     ctx.set_theme(egui::ThemePreference::Dark);
     ctx.set_visuals_of(egui::Theme::Dark, visuals);
